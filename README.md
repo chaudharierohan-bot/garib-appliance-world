@@ -34,8 +34,8 @@ The official WooCommerce GitHub release is downloaded over verified HTTPS and ch
 
 ## Store capabilities
 
-- Responsive search header, accessible category menu, manually controlled promotional slides, 11 category pages, featured/sale/latest/bestselling product grids.
-- Original local SVG promotional art and generated PNG product placeholders; no copied branding or third-party photographs.
+- Responsive search header, accessible category menu, three manually controlled promotional slides with previous/next buttons and keyboard support, 11 category pages, featured/sale/latest/bestselling product grids.
+- Photorealistic, AI-generated temporary product/lifestyle placeholders with responsive WordPress media sizes; no copied branding or third-party photographs. See [image provenance](docs/image-sources.md).
 - Native WooCommerce product galleries, specifications, stock, quantity selection, AJAX cart counter, cart editing, checkout and order management.
 - SRD prices with two decimal places; Suriname store country and delivery restriction. A **demonstration** local delivery rate of SRD 150. Taxes are disabled pending business/tax review.
 - Native customer account registration, login, dashboard, addresses, order history and password reset. Outbound account/reset emails require production email transport.
@@ -45,7 +45,7 @@ The official WooCommerce GitHub release is downloaded over verified HTTPS and ch
 
 ## Editing
 
-Custom theme: `theme/garib-appliance-world/`. Files bind-mount into WordPress; no frontend build is required. Change design tokens in `assets/css/store.css`, interactions in `assets/js/store.js`, and homepage sections in `front-page.php`. WordPress Customizer manages promotional copy, the main banner image and WhatsApp. WooCommerce admin manages all inventory, images, gallery images, prices, featured flags, stock, sale schedules and orders. Use **Products → Categories** to manage categories. Theme templates intentionally delegate commerce forms to WooCommerce instead of copying version-sensitive checkout templates.
+Custom theme: `theme/garib-appliance-world/`. Files bind-mount into WordPress; no frontend build is required. Change design tokens in `assets/css/store.css`, interactions in `assets/js/store.js`, and homepage sections in `front-page.php`. WordPress Customizer manages promotional copy, the main banner image, WhatsApp, contact details and social profile URLs. Unconfigured contact/social details are clearly labelled placeholders. WooCommerce admin manages all inventory, images, gallery images, prices, featured flags, stock, sale schedules and orders. Use **Products → Categories** to manage categories. Theme templates intentionally delegate commerce forms to WooCommerce instead of copying version-sensitive checkout templates.
 
 The theme can be zipped by packaging the `garib-appliance-world` theme directory itself, then installed through Appearance → Themes. For a separate WordPress installation, install WooCommerce and configure SRD/store country/payment methods there. Theme activation alone never changes an existing shop's business settings.
 

@@ -23,3 +23,11 @@ Do not run `configure.php` or `setup.sh` against an established production store
 ## Cloud startup
 
 Use the existing isolated checkout under `/workspace/garib-appliance-world`; do not create worktrees unless explicitly requested. Start retained containers with `docker compose up -d`, then check an HTTP response, catalogue and checkout. Docker processes do not survive environment snapshots; startup instructions must restart them. If this managed runtime requires network-aware containers for future downloads, retain its proxy configuration and mount its CA as documented by the cloud runtime skill. No TLS-verification bypass is part of this project.
+
+## Retail homepage refresh
+
+The existing theme and Docker stack are retained. The homepage now uses a three-slide, manually operated promotional carousel with previous/next buttons, dot selection and arrow-key support. There is no auto-rotation to interrupt reading or require an autoplay pause control. Featured Products, Special Offers, New Arrivals and Best Sellers still use native WooCommerce queries/shortcodes; prices, stock and add-to-cart actions are live store data. Sale badges compute a saving percentage for simple products. Sales history is not fabricated.
+
+The category menu uses two columns on desktop and a bounded scrollable list on mobile. Additional tech/audio discovery panels link to actual product categories. The footer contains customer service links, payment information and editable contact/social fields under Appearance → Customize → Store promotions & contact. Until real values are supplied, contact fields explicitly say they are to be confirmed and social labels are non-clickable placeholders. No fictional phone number, address or social profile is published.
+
+The demo photo importer runs after the existing seed in `setup.sh`. To update only demonstration imagery on an existing local installation without changing business settings, run `docker compose run --rm -T cli wp eval-file /setup/refresh-photos.php`. It preserves owner-supplied product images. See `docs/image-sources.md` for provenance and limitations.

@@ -11,8 +11,8 @@ add_action('after_setup_theme', function () {
     register_nav_menus(['primary' => __('Primary navigation', 'garib-appliance-world')]);
 });
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('gaw', get_theme_file_uri('/assets/css/store.css'), [], '1.0.0');
-    wp_enqueue_script('gaw', get_theme_file_uri('/assets/js/store.js'), [], '1.0.0', true);
+    wp_enqueue_style('gaw', get_theme_file_uri('/assets/css/store.css'), [], '1.1.0');
+    wp_enqueue_script('gaw', get_theme_file_uri('/assets/js/store.js'), [], '1.1.0', true);
     if (class_exists('WooCommerce') && !is_account_page()) { wp_enqueue_script('wc-cart-fragments'); }
 });
 function gaw_categories() {
@@ -73,3 +73,27 @@ add_action('woocommerce_guest_session_to_user_id', function () {
         WC()->session->set_customer_session_cookie(true);
     }
 }, 10, 0);
+
+/** Shared demo photographs are media attachments, so WordPress generates responsive sizes. */
+function gaw_photo($key, $size = 'medium', $attributes = []) {
+    $id = (int) get_option('gaw_demo_photo_' . sanitize_key($key));
+    if (!$id) { return ''; }
+    return wp_get_attachment_image($id, $size, false, $attributes);
+}
+add_filter('woocommerce_sale_flash', function ($html, $post, $product) {
+    if ($product->is_type('simple') && (float) $product->get_regular_price() > 0 && $product->is_on_sale()) {
+        $saving = round(100 * (1 - (float) $product->get_sale_price() / (float) $product->get_regular_price()));
+        return '<span class="onsale">' . esc_html(sprintf(__('Save %s%%', 'garib-appliance-world'), $saving)) . '</span>';
+    }
+    return $html;
+}, 10, 3);
+add_action('customize_register', function ($c) {
+    foreach (['contact_phone'=>'Store phone','contact_email'=>'Customer service email','contact_address'=>'Store address / opening hours'] as $key=>$label) {
+        $c->add_setting('gaw_' . $key, ['default'=>'','sanitize_callback'=>$key === 'contact_email' ? 'sanitize_email' : 'sanitize_text_field']);
+        $c->add_control('gaw_' . $key, ['section'=>'gaw_store','label'=>$label]);
+    }
+    foreach (['facebook','instagram','youtube'] as $network) {
+        $c->add_setting('gaw_' . $network, ['default'=>'','sanitize_callback'=>'esc_url_raw']);
+        $c->add_control('gaw_' . $network, ['section'=>'gaw_store','label'=>ucfirst($network) . ' profile URL','type'=>'url']);
+    }
+});

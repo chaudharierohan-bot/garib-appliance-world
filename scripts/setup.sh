@@ -43,5 +43,6 @@ fi
 wp theme activate garib-appliance-world
 wp eval-file /setup/configure.php
 wp eval-file /setup/seed.php
+wp eval-file /setup/refresh-photos.php
 wp rewrite flush --hard
 printf 'Local store configured at %s. Demo products and delivery pricing only.\n' "$WP_URL"

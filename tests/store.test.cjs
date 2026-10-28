@@ -21,11 +21,33 @@ async function check(name, fn) { try { await fn(); } catch(error) { await curren
       assert.equal(await page.locator('li.product').count(),16);
       await page.locator('.slide-dot').nth(1).click();
       assert.equal(await page.locator('.hero-slide').nth(1).isVisible(),true);
+      await page.locator('.slide-next').click();
+      assert.equal(await page.locator('.hero-slide').nth(2).isVisible(),true);
+      await page.locator('.slide-prev').click();
+      assert.equal(await page.locator('.hero-slide').nth(1).isVisible(),true);
+      await page.locator('.slide-next').focus();
+      await page.keyboard.press('ArrowRight');
+      assert.equal(await page.locator('.hero-slide').nth(2).isVisible(),true);
       await page.locator('.slide-dot').first().click();
+      for (const id of ['featured-products','special-offers','new-arrivals','best-sellers']) {
+        const section=page.locator('#'+id);
+        assert.equal(await section.locator('li.product').count(),4);
+        assert.equal(await section.locator('.price').count(),4);
+        assert.match(await section.innerText(),/SRD/);
+        assert.equal(await section.locator('li.product a.woocommerce-LoopProduct-link[href*="/product/"]').count(),4);
+        assert.ok(await section.locator('a.add_to_cart_button').count());
+      }
+      assert.equal(await page.locator('#special-offers .price del').count(),4);
+      assert.equal(await page.locator('#special-offers .price ins').count(),4);
+      assert.equal(await page.locator('.hero-slide').count(),3);
+      assert.equal(await page.locator('.social-links span').count(),3);
+      assert.match(await page.locator('.footer-contact').innerText(),/to be confirmed/);
+      assert.match(await page.locator('#featured-products li.product img').first().getAttribute('src'),/gaw-demo-/);
+
       await page.screenshot({path:'test-results/desktop.png',fullPage:true});
     });
     await check('mobile and tablet layout, category menu and keyboard dismissal',async()=>{
-      for(const width of [390,768]){
+      for(const width of [320,390,768]){
         await page.setViewportSize({width,height:844});
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true,`horizontal overflow at ${width}px`);
         await page.locator('.menu-toggle').click();
