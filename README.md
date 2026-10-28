@@ -6,6 +6,8 @@ An original, responsive WordPress/WooCommerce appliance store for Suriname. Pric
 
 ## Local development
 
+On Windows, follow the [Windows + Docker Desktop + WSL2 instructions](docs/windows-local.md) for exact setup commands, browser/admin addresses and a manual shopping test.
+
 Requires Docker Engine + Compose v2, Bash, curl, OpenSSL and sha256sum. The stack contains WordPress 6.8.3 / PHP 8.3, MySQL 8.4, and WooCommerce 10.3.4. These are reproducible development pins, not a claim of current production security support: review and update before launch.
 
 ```bash
