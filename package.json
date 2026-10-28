@@ -1,0 +1,6 @@
+{
+  "name": "garib-appliance-world",
+  "private": true,
+  "scripts": {"test": "node tests/store.test.cjs"},
+  "devDependencies": {"playwright": "1.62.1"}
+}
